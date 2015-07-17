@@ -1767,7 +1767,9 @@ public class Zendesk implements Closeable {
 
             public T next() {
                 if (!hasNext()) {
-                    throw new NoSuchElementException();
+                    //throw new NoSuchElementException();
+                    // It's best to return null (type and dummy user safe operation)
+                    return null;
                 }
                 return current.next();
             }
