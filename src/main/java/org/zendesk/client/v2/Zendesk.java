@@ -26,6 +26,7 @@ import org.zendesk.client.v2.model.Group;
 import org.zendesk.client.v2.model.GroupMembership;
 import org.zendesk.client.v2.model.Identity;
 import org.zendesk.client.v2.model.JobStatus;
+import org.zendesk.client.v2.model.ZenLocale;
 import org.zendesk.client.v2.model.Macro;
 import org.zendesk.client.v2.model.Metric;
 import org.zendesk.client.v2.model.Organization;
@@ -497,6 +498,30 @@ public class Zendesk implements Closeable {
     public Iterable<TwitterMonitor> getTwitterMonitors() { 
         return new PagedIterable<TwitterMonitor>(cnst("/channels/twitter/monitored_twitter_handles.json"),  
               handleList(TwitterMonitor.class, "monitored_twitter_handles"));
+    }
+    
+    public Iterable<ZenLocale> getPublicLocales () {
+       return new PagedIterable<ZenLocale>(cnst("/locales/public.json"), handleList(ZenLocale.class, "locales"));
+    }
+    
+    public Iterable<ZenLocale> getAccountLocales () {
+       return new PagedIterable<ZenLocale>(cnst("/locales.json"), handleList(ZenLocale.class, "locales"));
+    }
+    
+    public Iterable<ZenLocale> getAgentLocales () {
+       return new PagedIterable<ZenLocale>(cnst("/locales/agent.json"), handleList(ZenLocale.class, "locales"));
+    }
+    
+    public ZenLocale getLocaleById (Long id) {
+       return complete(submit(req("GET", tmpl("/locales/{id}.json").set("id", id)), handle(ZenLocale.class, "locale")));
+    }
+    
+    public ZenLocale getCurrentLocale () {
+       return complete(submit(req("GET", cnst("/locales/current.json")), handle(ZenLocale.class, "locale")));
+    }
+    
+    public ZenLocale getBestLanguageForUser () {
+       return complete(submit(req("GET", cnst("locales/detect_best_locale.json")), handle(ZenLocale.class, "locale")));
     }
 
     
