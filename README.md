@@ -3,6 +3,8 @@ Zendesk Java Client
 
 This is a [Zendesk][zd] client implementation written in Java using AsyncHttpClient and Jackson.
 
+[Attention]: The API only works with Netty 3.x. If using JBoss EAP 6.x or higher, where the Netty implementation is 4.x, the API implementation will not work.
+
 Using the API
 -------------
 
